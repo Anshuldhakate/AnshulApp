@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Notes Dashboard</h1>
+    <div id="parent">
+        <h3 id="title"></h3>
+        <p id="body"></p>
+        <button>Edit</button>
+        <button>Delete</button>
+    </div>
+</body>
+</html>
+<script>
+    const getData=()=>{
+        fetch("https://myapp-34u0.onrender.com/notes", {
+            headers:{
+            "Content-type":"application-json",
+            authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+        })
+        .then(res=>res.json())
+        .then((data)=>{
+            console.log(data)
+            data.notes.map((ele)=>{
+                let title=document.getElementById("title")
+                let body=document.getElementById("body")
+                title.innerText= ele.title
+                body.innerText= ele.body
+            })
+        
+        })
+        .catch(err=>console.log(err))
+    }
+    getData()
+</script>
